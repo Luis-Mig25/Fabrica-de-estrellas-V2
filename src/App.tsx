@@ -14,7 +14,9 @@ const routes: RouteObject[] = [
   { path: "/about", element: <Info /> },
 ];
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes, {
+  basename: import.meta.env.PROD ? "/Fabrica-de-estrellas-V2" : "/",
+});
 
 export const App = () => {
   return <RouterProvider router={router} />;
