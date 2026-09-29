@@ -42,6 +42,13 @@ const TELESCOPES = [
   },
 ];
 
+const SPECTRUM_POSITIONS: Record<string, { label: string; percent: string }> = {
+  jwst: { label: "Infrarrojo", percent: "30%" },
+  human: { label: "Visible", percent: "50%" },
+  hubble: { label: "Ultravioleta", percent: "70%" },
+  chandra: { label: "Rayos X", percent: "88%" },
+};
+
 export const SimulationPanel = () => {
   const [starTemp, setStarTemp] = useState(5200);
   const [distancia, setDistancia] = useState(0);
@@ -70,7 +77,7 @@ export const SimulationPanel = () => {
         return {
           displayColor: temp < 6000 ? "#ffffff" : "#ff4500",
           filter: "saturate(1.5) contrast(1.2)",
-          opacity: temp > 30000 ? 5 : 3, // Las gigantes azules casi no emiten IR
+          opacity: temp > 30000 ? 3 : 1, // Las gigantes azules casi no emiten IR
           spikes: 6, // El Webb tiene 6 picos
           starsVisible: 600,
         };
@@ -78,15 +85,15 @@ export const SimulationPanel = () => {
         return {
           displayColor: temp > 10000 ? "#ffffff" : "#6b21a8", // Lo caliente es blanco en UV
           filter: "hue-rotate(-45deg) saturate(2)",
-          opacity: temp < 4000 ? 0.1 : 1, // Las enanas rojas casi no se ven en UV
+          opacity: temp < 4000 ? 1 : 4, // Las enanas rojas casi no se ven en UV
           spikes: 4, // El Hubble tiene 4 picos
           starsVisible: 400,
         };
       case "chandra": // Rayos X: Solo se ve el plasma extremo y coronas muy calientes.
         return {
-          displayColor: temp > 20000 ? "#00ffff" : "#1e1b4b", // Cian brillante para lo más caliente
+          displayColor: temp > 20000 ? "#B992F0" : "#7F00FF", // Cian brillante para lo más caliente
           filter: "contrast(2)",
-          opacity: temp < 10000 ? 0.5 : 1, // Casi invisible a menos que sea muy masiva
+          opacity: temp < 10000 ? 0.8 : 1.3, // Casi invisible a menos que sea muy masiva
           spikes: 0, // Los detectores de Rayos X no suelen generar flares de lente cruzados
           starsVisible: 250,
         };
@@ -157,6 +164,38 @@ export const SimulationPanel = () => {
                 </span>
               </button>
             ))}
+          </div>
+          {/* Barra del espectro */}
+          <div className="w-full flex flex-col gap-1.5 mt-2 p-2 bg-slate-900/60 rounded-xl border border-slate-700/50">
+            <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold px-1">
+              <span>Ondas Largas</span>
+              <span className="text-amber-400">
+                {SPECTRUM_POSITIONS[telescope]?.label}
+              </span>
+              <span>Ondas Cortas</span>
+            </div>
+
+            <div
+              className="relative h-3 w-full rounded-full overflow-visible"
+              style={{
+                background:
+                  "linear-gradient(90deg, #7f1d1d 0%, #ef4444 20%, #f59e0b 40%, #22c55e 55%, #3b82f6 70%, #9333ea 85%, #312e81 100%)",
+              }}
+            >
+              {/* Marcador del Telescopio Seleccionado */}
+              <div
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-2 border-slate-900 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500 ease-out z-10"
+                style={{ left: SPECTRUM_POSITIONS[telescope]?.percent }}
+              />
+            </div>
+
+            {/* Marcas de referencia */}
+            <div className="flex justify-between text-[8px] text-slate-500 px-0.5 pt-0.5">
+              <span>IR</span>
+              <span>Vis</span>
+              <span>UV</span>
+              <span>Rx</span>
+            </div>
           </div>
         </div>
 
