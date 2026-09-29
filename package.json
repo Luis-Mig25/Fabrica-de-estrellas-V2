@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@tsparticles/engine": "^4.4.0",
+    "@tsparticles/preset-stars": "^4.4.0",
+    "@tsparticles/react": "^4.4.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.48.0",
+    "tailwindcss": "^4.3.3"
+  }
+}
