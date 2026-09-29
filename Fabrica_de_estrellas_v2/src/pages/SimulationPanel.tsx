@@ -205,7 +205,10 @@ export const SimulationPanel = () => {
           <h3 className="text-[20px] text-center">
             ¿Quieres conocer mas sobre nuestra investigación?
           </h3>
-          <Link className="text-white  text-center rounded-2xl bg-blue-800" to={"about"}>
+          <Link
+            className="text-white  text-center rounded-2xl bg-blue-800 hover:bg-blue-600 transition-colors duration-100"
+            to={"about"}
+          >
             Conoce más
           </Link>
         </div>
