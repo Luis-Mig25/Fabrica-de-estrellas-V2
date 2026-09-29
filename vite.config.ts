@@ -10,5 +10,6 @@ export default defineConfig({
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] }),
   ],
-  base: "/Fabrica-de-estrellas-V2/",
+  base:
+    process.env.NODE_ENV === "production" ? "/Fabrica-de-estrellas-V2/" : "/",
 });
